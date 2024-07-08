@@ -22,7 +22,7 @@ function Login(props) {
     };
 
     try {
-        const response = await axios.post('https://hospital-gijl.onrender.com/api/auth/login', loginData, {
+        const response = await axios.post('https://hospitalerp-node.onrender.com/api/auth/login', loginData, {
             withCredentials: true  // Ensure cookies are sent
           }); 
       const { userType,user } = response.data;

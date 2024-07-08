@@ -29,7 +29,7 @@ const DoctorInformation = () => {
   }, []);
   const fetchAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospital-gijl.onrender.com/api/appointments/doctor/${doctorId}`);
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
       setTodayappointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments', error);
@@ -49,7 +49,7 @@ const DoctorInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://hospital-gijl.onrender.com/api/doctor/${doctor._id}`, doctor, {
+      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/${doctor._id}`, doctor, {
         withCredentials: true  // Ensure cookies are sent
       });
       if (response.status === 200) {

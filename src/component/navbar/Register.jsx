@@ -61,7 +61,7 @@ function Register(props) {
     };
 
     try {
-      const response = await axios.post('https://hospital-gijl.onrender.com/api/auth/register', newUser);
+      const response = await axios.post('https://hospitalerp-node.onrender.com/api/auth/register', newUser);
       console.log(response.data);
       props.onHide();
       defa()

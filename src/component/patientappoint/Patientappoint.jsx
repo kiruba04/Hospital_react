@@ -14,7 +14,7 @@ const Patientappoint = () => {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get('https://hospital-gijl.onrender.com/api/user/search/phone', {
+            const response = await axios.get('https://hospitalerp-node.onrender.com/api/user/search/phone', {
                 params: { phone: phoneNumber }
             });
             setUserId(response.data.id);
