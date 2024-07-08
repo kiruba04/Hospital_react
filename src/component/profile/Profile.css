@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=LXGW+WenKai+Mono+TC&family=Quicksand:wght@300..700&display=swap');
+
+.mt-5 {
+    margin-top: 3rem;
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .mb-3 {
+    margin-bottom: 1rem;
+  }
+  
+  .password-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-field .form-control {
+    margin-right: 0.5rem;
+  }
+  .align{
+    top:15%;
+    position:relative;
+  }
+  .col-md-2 {
+    position: relative;
+}
+
+.sidenavfont{
+    font-family: "Noto Serif", serif !important;
+    font-optical-sizing: auto;
+}
+
+
+@media (max-width: 450px) {
+    .col-md-2 {
+        top:-35px;
+    }
+}
+
+
+.subhead{
+    margin-bottom: 40px;
+    font-family: "Quicksand", sans-serif;
+}
+
+.patient-card {
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    margin:15px;
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: -10px 9px 10px 3px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 320px !important;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.patient-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.patient-card h2 {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid #00796b;
+    padding-bottom: 10px;
+}
+
+.detail {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.detail strong {
+    color: #004d40;
+}
+
+.detail span {
+    color: #00796b;
+}
+
+@media (max-width: 600px) {
+    .patient-card {
+        padding: 20px;
+    }
+    
+    .detail strong {
+        width: 100px;
+    }
+
+    .detail span {
+        display: block;
+        margin-top: 5px;
+    }
+}
+
+.fa-user-doctor, .fa-ticket, .fa-user, .fa-calendar-day, .fa-calendar-days, .fa-clock, .fa-droplet, .fa-venus-mars, .fa-notes-medical{
+    margin-right: 10px;
+}
+
+  

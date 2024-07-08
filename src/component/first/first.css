@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NG+Modern:wght@100..400&display=swap');
+
+.text{
+    font-family: "Playwrite NG Modern", cursive;
+    font-size: 2vw;
+}
+
+/*background*/
+.background{
+  background-image: url('https://housemed.qodeinteractive.com/wp-content/uploads/2018/06/h1-slider-img-1.jpg');
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; 
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; 
+}
+
+.animated-text {
+    position: fixed;
+    top: 30%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn 1s forwards; /* Animation duration and fill mode */
+  }
+  
+  @keyframes slideIn {
+    0% {
+      left: -100%; /* Start position */
+    }
+    100% {
+      left:5% /* End position */
+    }
+  }
+
+  .animated-text-2 {
+    position: fixed;
+    top: 30%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn1 2s forwards; /* Animation duration and fill mode */
+    --slide-end-position:15%;
+}
+  
+  @keyframes slideIn1 {
+    0% {
+      left: -100%; /* Start position */
+    }
+    100% {
+      left:var(--slide-end-position); /* End position */
+    }
+  }
+  
+  .animated-text-3 {
+    position: fixed;
+    top: 35%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn 3s forwards; /* Animation duration and fill mode */
+  }
+  .animated-text-but {
+    position: fixed;
+    top: 50%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn 4s forwards; /* Animation duration and fill mode */
+  }
+  .animated-text-par {
+    position: fixed;
+    top: 45%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    font-size: 1vw;
+    animation: slideIn 4s forwards; /* Animation duration and fill mode */
+  }
+
+  @media (max-width: 576px) {
+    .text {
+      font-size: 5vw;
+    }
+    .animated-text-par{
+        font-size: 3.5vw  ;
+        top:40%;
+    }
+    .animated-text-2 {
+        --slide-end-position:30%;
+    }
+   
+      
+  }

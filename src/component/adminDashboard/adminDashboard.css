@@ -1,0 +1,42 @@
+#dashboard {
+    background-color: #ffffff;
+    padding: 2rem 0;
+  }
+  
+  #dashboard h2 {
+    color: #343a40;
+    font-weight: 700;
+  }
+
+  .line{
+    padding-top:25px;
+    border-bottom: 2px solid green;
+    padding-bottom: 5px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    color: #6c757d;
+  }
+  
+  .card-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .custom-card {
+    border-radius: 30px !important; /* Adjust the value to increase the border radius */
+  }
+  
+  .alignment{
+    position:relative;
+    top:75px;
+  }

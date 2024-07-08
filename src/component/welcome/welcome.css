@@ -1,0 +1,38 @@
+.animated-text-wel {
+    position: absolute;
+    top: 10%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn 1s forwards; /* Animation duration and fill mode */
+  }
+  
+  @keyframes slideIn {
+    0% {
+      left: -100%; /* Start position */
+    }
+    100% {
+      left:5% /* End position */
+    }
+  }
+
+  .animated-text-2-wel {
+    position: absolute;
+    top: 10%; /* Adjust as needed */
+    left: -100%; /* Start from outside the viewport */
+    animation: slideIn1 2s forwards; /* Animation duration and fill mode */
+    --slide-end-position:15%;
+}
+  
+  @keyframes slideIn1 {
+    0% {
+      left: -100%; /* Start position */
+    }
+    100% {
+      left:var(--slide-end-position); /* End position */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .animated-text-2-wel {
+        --slide-end-position:30%;
+    } 
+  }

@@ -1,0 +1,109 @@
+
+/*nav bar */
+
+.d-flex{
+    gap:20px;
+}
+
+/*font */
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+IS:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+/*text*/
+.navtext{
+  font-family: "Noto Serif", serif !important;
+  font-optical-sizing: auto;
+}
+
+/* model */
+
+.custom-modal-content {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
+    backdrop-filter: blur(10px); /* Blur effect on the backdrop */
+    border: none; /* Remove border */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Optional: Soft shadow for depth */
+    border-radius: 12px; /* Optional: Rounded corners */
+    opacity: 0.8;
+  }
+  
+  .custom-modal-header {
+    color: #1ce237; /* Header text color */
+    border-bottom: none; /* Optional: Remove bottom border from header */
+    font-family: "Playwrite IS", cursive;
+    font-optical-sizing: auto;
+  }
+  
+  .custom-modal-body {
+    padding: 20px; /* Adjust padding */
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+  }
+  
+  .custom-modal-dialog {
+    max-width: 400px !important; /* Set maximum width for the modal */  
+  }
+
+
+ /*model animation*/
+
+  .modal.fade .modal-dialog {
+    animation: fadeOut 2s ease-out;
+
+  }
+  
+  .modal.show .modal-dialog {
+    animation: fadeIn 1s ease-out;
+    
+  }
+  @keyframes fadeIn {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 0.8;
+    }
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      transform: translateY(0); /* Start at the original position */
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100px); /* Move downwards */
+      opacity: 0; /* Fade out completely */
+    }
+  }
+
+
+.btnclass{
+    width:40%;
+    font-family: "Playwrite IS", cursive !important;
+}
+
+.password-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-field .form-control {
+    flex: 1;
+  }
+  
+  .password-field .btn {
+    margin-left: 5px;
+  }
+  
+
+
+
+/*large screen */
+@media only screen and (min-width: 1200px) {
+    .btnclass{
+        width:55%;
+    }
+}
