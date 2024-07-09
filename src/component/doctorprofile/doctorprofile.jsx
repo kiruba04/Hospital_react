@@ -76,12 +76,11 @@ const DoctorInformation = () => {
   const renderAppointmentCard = (appointment) => (
     <div className="patient-card" key={appointment._id}>
       <h2>Patient Details</h2>
-      <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.userid.username}</span></div>
+      <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.patientname}</span></div>
+      <div className='detail'><FontAwesomeIcon icon ={faCalendarDays}/><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
+      <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faDroplet} /><strong>Bloodtype:</strong> <span>{appointment.userid.bloodType}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.userid.gender}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Medical History:</strong> <span>{appointment.userid.medicalHistory}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>  
     </div>
   );
