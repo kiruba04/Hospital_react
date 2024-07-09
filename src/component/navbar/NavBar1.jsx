@@ -97,7 +97,7 @@ function NavBar1() {
                     </>
                   ) : (
                     <>
-                      <Button variant="outline-success" onClick={() => setLoginShow(true)}>Login</Button>
+                      <Button className='btn-custom-success' onClick={() => setLoginShow(true)}>Login</Button>
                       <Button variant="outline-success" onClick={() => setRegisterShow(true)}>Sign Up</Button>
                     </>
                   )}

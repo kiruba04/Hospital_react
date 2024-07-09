@@ -107,3 +107,15 @@
         width:55%;
     }
 }
+
+.btn-custom-success {
+  background-color: #28a745; /* Success color */
+  color: white;
+  border: 1px solid #28a745; /* Success color border */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom-success:hover {
+  background-color: white;
+  color: #28a745; /* Success color text */
+}
