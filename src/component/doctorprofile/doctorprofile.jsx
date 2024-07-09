@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Nav,Badge } from 'react-bootstrap';
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -91,7 +91,7 @@ const DoctorInformation = () => {
         <Col md={2}>
           <Nav className="flex-column">
             <Nav.Link active={view === 'profile'} onClick={() => setView('profile')} className="text-success sidenavfont">Profile</Nav.Link>
-            <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className="text-success sidenavfont">Today's Appointment{todayappointments.length}</Nav.Link>
+            <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className="text-success sidenavfont">Today's Appointment <Badge pill bg="primary">{todayappointments.length}</Badge></Nav.Link>
             <Nav.Link active={view === 'appointments'} onClick={() => setView('appointments')} className="text-success sidenavfont">Appointment Slots</Nav.Link>
           </Nav>
         </Col>
