@@ -109,13 +109,14 @@
 }
 
 .btn-custom-success {
-  background-color: #28a745; /* Success color */
-  color: white;
-  border: 1px solid #28a745; /* Success color border */
-  transition: background-color 0.3s, color 0.3s;
+  background-color: #28a745 !important; /* Success color */
+
+  color: white !important;
+  border: 1px solid #28a745 !important; /* Success color border */
+  transition: background-color 0.3s, color 0.3s !important;
 }
 
 .btn-custom-success:hover {
-  background-color: white;
-  color: #28a745; /* Success color text */
+  background-color: white !important;
+  color: #28a745 !important; /* Success color text */
 }
