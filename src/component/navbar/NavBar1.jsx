@@ -88,7 +88,7 @@ function NavBar1() {
                   <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/Appointment">Appointment</Nav.Link>
                   <Nav.Link href="/abort">About</Nav.Link>
-                  {isLoggedIn ? (
+                  {isLoggedIn && storedUser ? (
                     <>
                       <Nav.Link href={storedUser.isAdmin ? '/admin' : userType === 'doctor' ? '/doctor' :userType==='receptionist'?'/receptionist': '/dashboard'}>
                         {storedUser.username}
