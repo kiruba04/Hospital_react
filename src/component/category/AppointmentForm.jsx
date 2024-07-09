@@ -10,6 +10,9 @@ function AppointmentForm({ doctorId, userId, onHide }) {
   const [availableDays, setAvailableDays] = useState([]);
   const [selectedDayInfo, setSelectedDayInfo] = useState(null);
   const [tokenNumber, setTokenNumber] = useState(null);
+  const [patientname,setPatientname]=useState('')
+  const [patientgender,setPatientgender]=useState('')
+  const [patientage,setPatientage]=useState('')
   const [totalToken, setTotalToken] = useState('');
   const [error, setError] = useState('');
   const [symptom, setSymptom] = useState('');
@@ -99,7 +102,10 @@ function AppointmentForm({ doctorId, userId, onHide }) {
       day: new Date(date).toLocaleString('en-US', { weekday: 'long' }),
       time: time,
       symptom: symptom,
-      tokennumber: tokenNumber
+      tokennumber: tokenNumber,
+      patientname:patientname,
+      patientage:patientage,
+      patientgender:patientgender
     };
 
     try {
@@ -139,6 +145,35 @@ function AppointmentForm({ doctorId, userId, onHide }) {
               onChange={(e) => setSymptom(e.target.value)}
               required
             />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="symptom">
+            <Form.Label>patient name</Form.Label>
+            <Form.Control
+              value={patientname}
+              onChange={(e) => setPatientname(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="symptom">
+            <Form.Label>patient Age</Form.Label>
+            <Form.Control
+              value={patientage}
+              onChange={(e) => setPatientage(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="symptom">
+            <Form.Label>patient gender</Form.Label>
+            <Form.Select
+              value={patientgender}
+              onChange={(e) => setPatientgender(e.target.value)}
+              required
+            >
+             <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+              </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3" controlId="time">
             <Form.Label>Available Time</Form.Label>
