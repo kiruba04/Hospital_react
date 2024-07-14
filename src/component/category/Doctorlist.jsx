@@ -43,7 +43,7 @@ const DoctorList = ({ userId }) => {
             <div className="card-area1">
               {doctors.filter(doctor => doctor.category === category).map(doctor => (
                 <div className="card1" key={doctor._id}>
-                  <img src={doctor.imageUrl} alt={`Doctor ${doctor.username}`} className="image-preview" />
+                  <img src={doctor.imageUrl || "https://static.vecteezy.com/system/resources/previews/000/421/716/original/vector-doctor-icon.jpg"} alt={`Doctor ${doctor.username}`} className="image-preview" />
                   <div className="card-content1">
                     <h3>Dr. {doctor.username}</h3>
                     <p><strong>Designation:</strong> MBBS</p>
