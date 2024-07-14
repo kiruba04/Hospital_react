@@ -43,7 +43,7 @@ const DoctorList = ({ userId }) => {
             <div className="card-area1">
               {doctors.filter(doctor => doctor.category === category).map(doctor => (
                 <div className="card1" key={doctor._id}>
-                  <img src="https://thumbs.dreamstime.com/z/doctor-icon-logo-white-background-template-vector-97395631.jpg" alt={`Doctor ${doctor.username}`} width="150px" height="150px" />
+                  <img src={doctor.imageUrl} alt={`Doctor ${doctor.username}`} className="image-preview" />
                   <div className="card-content1">
                     <h3>Dr. {doctor.username}</h3>
                     <p><strong>Designation:</strong> MBBS</p>

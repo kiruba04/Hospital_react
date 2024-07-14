@@ -34,8 +34,20 @@
 .sidenavfont{
     font-family: "Noto Serif", serif !important;
     font-optical-sizing: auto;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    border-radius: 15px;
 }
-
+.sidenavfont.active {
+    background-color:#14A44D; 
+    color:white !important; /* Change text color for active link */
+  }
+  .sidenavfont:hover{
+    background-color:#91d891; 
+    color:aliceblue !important;
+  }
 
 @media (max-width: 450px) {
     .col-md-2 {

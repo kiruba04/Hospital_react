@@ -13,7 +13,8 @@ function AddDoctor(props) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // State for image preview
   const [availability, setAvailability] = useState({
     Monday: { available: false, startTime: '', endTime: '', token: '' },
     Tuesday: { available: false, startTime: '', endTime: '', token: '' },
@@ -34,6 +35,8 @@ function AddDoctor(props) {
     setEmail('');
     setPhone('');
     setCategory('');
+    setImage(null);
+    setImagePreview(null); // Clear image preview
     setAvailability({
       Monday: { available: false, startTime: '', endTime: '', token: '' },
       Tuesday: { available: false, startTime: '', endTime: '', token: '' },
@@ -46,26 +49,55 @@ function AddDoctor(props) {
     setError('');
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+
+    // Display image preview
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newUser = {
-      username: username,
-      password: password,
-      dateofbirth: dateOfBirth,
-      email: email,
-      phone: phone,
-      category: category,
-      availableAppointments: Object.entries(availability).map(([day, details]) => ({
-        Day: day,
-        available: details.available,
-        startTime: details.startTime,
-        endTime: details.endTime,
-        availaableslots: details.token,
-      })),
-    };
+    if (!image) {
+      setError('Please select an image to upload');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'zpbashqc'); // Replace with your Cloudinary upload preset
 
     try {
+      const cloudinaryResponse = await axios.post('https://api.cloudinary.com/v1_1/dsgdnskfj/image/upload', formData);
+      const imageUrl = cloudinaryResponse.data.secure_url;
+
+      const newUser = {
+        username: username,
+        password: password,
+        dateofbirth: dateOfBirth,
+        email: email,
+        phone: phone,
+        category: category,
+        imageUrl: imageUrl,
+        availableAppointments: Object.entries(availability).map(([day, details]) => ({
+          Day: day,
+          available: details.available,
+          startTime: details.startTime,
+          endTime: details.endTime,
+          availaableslots: details.token,
+        })),
+      };
+
       const response = await axios.post('https://hospitalerp-node.onrender.com/api/doctor/add-doctor', newUser, {
         withCredentials: true
       });
@@ -225,6 +257,24 @@ function AddDoctor(props) {
                 <option value="Bone care">Bone care</option>
                 <option value="Child care">Child care</option>
               </Form.Control>
+            </Form.Group>
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="mb-3">
+                <Form.Label>Profile Image Preview</Form.Label>
+                <div className="image-preview-container">
+                  <img src={imagePreview} alt="Preview" className="image-preview" />
+                </div>
+              </div>
+            )}
+
+            <Form.Group className="mb-3" controlId="image">
+              <Form.Label>Profile Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={handleImageChange}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">

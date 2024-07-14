@@ -89,10 +89,10 @@ const DoctorInformation = () => {
     <Container className="mt-5">
       <Row>
         <Col md={2}>
-          <Nav className="flex-column">
-            <Nav.Link active={view === 'profile'} onClick={() => setView('profile')} className="text-success sidenavfont">Profile</Nav.Link>
-            <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className="text-success sidenavfont">Today's Appointment <Badge pill bg="primary">{todayappointments.length}</Badge></Nav.Link>
-            <Nav.Link active={view === 'appointments'} onClick={() => setView('appointments')} className="text-success sidenavfont">Appointment Slots</Nav.Link>
+        <Nav className="flex-column">
+            <Nav.Link active={view === 'profile'} onClick={() => setView('profile')} className={`text-success sidenavfont ${view === 'profile' ? 'active' : ''}`}>Profile</Nav.Link>
+            <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className={`text-success sidenavfont ${view === 'today appointment' ? 'active' : ''}`}>Today's Appointment <Badge pill bg="primary">{todayappointments.length}</Badge></Nav.Link>
+            <Nav.Link active={view === 'appointments'} onClick={() => setView('appointments')} className={`text-success sidenavfont ${view === 'appointments' ? 'active' : ''}`}>Appointment Slots</Nav.Link>
           </Nav>
         </Col>
         <Col md={10}>
@@ -193,6 +193,7 @@ const DoctorInformation = () => {
             </div>
           )
         }
+        
         </Col>
       </Row>
     </Container>
