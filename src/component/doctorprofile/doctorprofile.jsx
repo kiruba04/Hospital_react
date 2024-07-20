@@ -41,7 +41,7 @@ const DoctorInformation = () => {
 
   const fetchFutureAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/future/${doctorId}`);
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/future/${doctorId}`);
       const groupedAppointments = response.data.reduce((acc, appointment) => {
         const date = new Date(appointment.date).toLocaleDateString();
         if (!acc[date]) {
