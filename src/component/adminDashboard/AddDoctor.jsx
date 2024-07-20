@@ -289,7 +289,7 @@ function AddDoctor(props) {
 
             <Form.Group className="mb-3">
               <Form.Label>Available Appointments</Form.Label>
-              <Button variant="secondary" onClick={applyToAll}>Apply to all</Button>
+              <Button variant="outline-info" onClick={applyToAll} className='applyall'>Apply to all</Button>
               {Object.keys(availability).map(day => renderAvailabilityFields(day))}
             </Form.Group>
             {error && <Alert variant="danger">{error}</Alert>}
