@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Nav,Badge } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Nav, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faCalendarDays, faCalendarDay,faUser,faTicket,faVenusMars,faNotesMedical } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, faNotesMedical } from '@fortawesome/free-solid-svg-icons';
 
 const DoctorInformation = () => {
   const [view, setView] = useState('profile');
@@ -16,6 +16,7 @@ const DoctorInformation = () => {
     availableAppointments: []
   });
   const [todayappointments, setTodayappointments] = useState([]);
+  const [futureappointments, setFutureappointments] = useState([]);
 
   useEffect(() => {
     const storedDoctor = JSON.parse(localStorage.getItem('user'));
@@ -25,8 +26,10 @@ const DoctorInformation = () => {
         dateOfBirth: storedDoctor.dateofbirth ? new Date(storedDoctor.dateofbirth).toISOString().split('T')[0] : ''
       });
       fetchAppointments(storedDoctor._id);
+      fetchFutureAppointments(storedDoctor._id);
     }
   }, []);
+
   const fetchAppointments = async (doctorId) => {
     try {
       const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
@@ -36,6 +39,22 @@ const DoctorInformation = () => {
     }
   };
 
+  const fetchFutureAppointments = async (doctorId) => {
+    try {
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/future/${doctorId}`);
+      const groupedAppointments = response.data.reduce((acc, appointment) => {
+        const date = new Date(appointment.date).toLocaleDateString();
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(appointment);
+        return acc;
+      }, {});
+      setFutureappointments(groupedAppointments);
+    } catch (error) {
+      console.error('Error fetching future appointments', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,7 +96,7 @@ const DoctorInformation = () => {
     <div className="patient-card" key={appointment._id}>
       <h2>Patient Details</h2>
       <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.patientname}</span></div>
-      <div className='detail'><FontAwesomeIcon icon ={faCalendarDays}/><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
+      <div className='detail'><FontAwesomeIcon icon={faCalendarDays} /><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
@@ -85,13 +104,23 @@ const DoctorInformation = () => {
     </div>
   );
 
+  const renderFutureAppointments = () => {
+    return Object.keys(futureappointments).map(date => (
+      <div key={date}>
+        <h3>{date}</h3>
+        {futureappointments[date].map(renderAppointmentCard)}
+      </div>
+    ));
+  };
+
   return (
     <Container className="mt-5">
       <Row>
         <Col md={2}>
-        <Nav className="flex-column">
+          <Nav className="flex-column">
             <Nav.Link active={view === 'profile'} onClick={() => setView('profile')} className={`text-success sidenavfont ${view === 'profile' ? 'active' : ''}`}>Profile</Nav.Link>
             <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className={`text-success sidenavfont ${view === 'today appointment' ? 'active' : ''}`}>Today's Appointment <Badge pill bg="primary">{todayappointments.length}</Badge></Nav.Link>
+            <Nav.Link active={view === 'futureappointment'} onClick={() => setView('futureappointment')} className={`text-success sidenavfont ${view === 'futureappointment' ? 'active' : ''}`}>Future Appointment</Nav.Link>
             <Nav.Link active={view === 'appointments'} onClick={() => setView('appointments')} className={`text-success sidenavfont ${view === 'appointments' ? 'active' : ''}`}>Appointment Slots</Nav.Link>
           </Nav>
         </Col>
@@ -121,10 +150,10 @@ const DoctorInformation = () => {
                       value={doctor.category}
                       onChange={handleChange}
                     >
-                        <option value="">Select specialization...</option>
-                        <option value="Skincare">Skin care</option>
-                        <option value="Bone care">Bone care</option>
-                       <option value="Child care">Child care</option>
+                      <option value="">Select specialization...</option>
+                      <option value="Skincare">Skin care</option>
+                      <option value="Bone care">Bone care</option>
+                      <option value="Child care">Child care</option>
                     </Form.Control>
                   </Form.Group>
                 </Row>
@@ -180,20 +209,30 @@ const DoctorInformation = () => {
               </Row>
             </div>
           )}
-          {view==='today appointment'&&(
+
+          {view === 'today appointment' && (
             <div>
-            <h3 className='subhead'>Today's Appointments</h3>
-            {todayappointments.length === 0 ? (
-              <p>No appointments for today.</p>
-            ) : (
-              <Row>
-                {todayappointments.map(renderAppointmentCard)}
-              </Row>
-            )}
+              <h3 className='subhead'>Today's Appointments</h3>
+              {todayappointments.length === 0 ? (
+                <p>No appointments for today.</p>
+              ) : (
+                <Row>
+                  {todayappointments.map(renderAppointmentCard)}
+                </Row>
+              )}
             </div>
-          )
-        }
-        
+          )}
+
+          {view === 'futureappointment' && (
+            <div>
+              <h3 className='subhead'>Future Appointments</h3>
+              {Object.keys(futureappointments).length === 0 ? (
+                <p>No future appointments.</p>
+              ) : (
+                renderFutureAppointments()
+              )}
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

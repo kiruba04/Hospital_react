@@ -239,7 +239,7 @@ function Register(props) {
 
             </Form.Group>
             {error && <Alert variant="danger">{error}</Alert>}
-
+            
             <div className="text-center">
               <Button variant="outline-success btnclass" type="submit">Register</Button>
             </div>
