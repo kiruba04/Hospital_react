@@ -22,7 +22,6 @@ function AddDoctor(props) {
     Thursday: { available: false, startTime: '', endTime: '', token: '' },
     Friday: { available: false, startTime: '', endTime: '', token: '' },
     Saturday: { available: false, startTime: '', endTime: '', token: '' },
-    Sunday: { available: false, startTime: '', endTime: '', token: '' },
   });
 
   const [error, setError] = useState('');
