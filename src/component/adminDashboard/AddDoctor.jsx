@@ -129,6 +129,17 @@ function AddDoctor(props) {
     }));
   };
 
+  const applyToAll = () => {
+    setAvailability(prev => {
+      const monday = prev.Monday;
+      const newAvailability = Object.keys(prev).reduce((acc, day) => {
+        acc[day] = { ...monday };
+        return acc;
+      }, {});
+      return newAvailability;
+    });
+  };
+
   const renderAvailabilityFields = (day) => (
     <div key={day}>
       <Form.Group className="mb-3">
@@ -279,6 +290,7 @@ function AddDoctor(props) {
 
             <Form.Group className="mb-3">
               <Form.Label>Available Appointments</Form.Label>
+              <Button variant="secondary" onClick={applyToAll}>Apply to all</Button>
               {Object.keys(availability).map(day => renderAvailabilityFields(day))}
             </Form.Group>
             {error && <Alert variant="danger">{error}</Alert>}
