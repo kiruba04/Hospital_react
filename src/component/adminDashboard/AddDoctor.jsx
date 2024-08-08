@@ -264,9 +264,7 @@ function AddDoctor(props) {
                 required
               >
                 <option value="">Select specialization...</option>
-                <option value="Skincare">Skin care</option>
-                <option value="Bone care">Bone care</option>
-                <option value="Child care">Child care</option>
+                <option value="Orthopaedics">Orthopaedics</option>
               </Form.Control>
             </Form.Group>
 
