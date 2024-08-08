@@ -244,9 +244,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
                 required
               >
                 <option value="">Select specialization...</option>
-                <option value="Skincare">Skin care</option>
-                <option value="Bone care">Bone care</option>
-                <option value="Child care">Child care</option>
+                <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
               </Form.Control>
             </Form.Group>
 
