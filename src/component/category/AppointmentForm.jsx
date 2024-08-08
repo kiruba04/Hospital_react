@@ -29,7 +29,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const availableDays = [];
 
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 7; i++) {
       const currentDay = new Date();
       currentDay.setDate(currentDay.getDate() + i);
       const dayName = daysOfWeek[currentDay.getDay()];
