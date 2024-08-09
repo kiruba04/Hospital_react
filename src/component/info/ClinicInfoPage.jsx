@@ -39,7 +39,7 @@ const ClinicInfoPage = () => {
         </div>
       </main>
       <footer className="clinic-page-footer">
-        <p>© CopyRight 2024 Sri Ethiraj Technology</p>
+        <p>© CopyRight 2024 Sri Ethiraja Technologies</p>
       </footer>
     </div>
   );
