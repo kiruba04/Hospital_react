@@ -12,7 +12,7 @@ import Dashboard from"./pages/dashboard/dashboard"
 import Admin from "./pages/admin/admin"
 import Doctor from "./pages/doctor/doctor"
 import Receptionist from "./pages/receptionist/receptionist"
-
+import About from "./pages/abort/abort";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -27,6 +27,7 @@ function App() {
         <Route path="/admin" element ={<Admin/>}/>
         <Route path="/doctor" element ={<Doctor/>}/>
         <Route path='/receptionist' element ={<Receptionist/>}/>
+        <Route path="/about" element={<About/>}/>
       </Routes>
     </BrowserRouter>
 

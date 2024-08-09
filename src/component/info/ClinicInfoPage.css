@@ -1,0 +1,97 @@
+.clinic-page-container {
+    margin-top:20px;
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .clinic-page-header {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .clinic-page-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .clinic-page-nav li {
+    margin-left: 20px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .clinic-page-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    margin-top:20px;
+  }
+  
+  .clinic-page-text {
+    max-width: 50%;
+  }
+  
+  .clinic-page-text h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .clinic-page-text p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .clinic-page-text ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .clinic-page-text ul li {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .clinic-page-button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .clinic-page-button:hover {
+    background-color: #ff5a4f;
+  }
+  
+  .clinic-page-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+
+.clinic-page-footer {
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 30px;
+  }
+  
+  .clinic-page-footer p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }

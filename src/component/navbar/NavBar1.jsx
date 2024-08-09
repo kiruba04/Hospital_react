@@ -87,7 +87,7 @@ function NavBar1() {
                 <Nav className="justify-content-end flex-grow-1 pe-3 d-flex">
                   <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/Appointment">Appointment</Nav.Link>
-                  <Nav.Link href="/abort">About</Nav.Link>
+                  <Nav.Link href="/about">About</Nav.Link>
                   {isLoggedIn && storedUser ? (
                     <>
                       <Nav.Link href={storedUser.isAdmin ? '/admin' : userType === 'doctor' ? '/doctor' :userType==='receptionist'?'/receptionist': '/dashboard'}>
