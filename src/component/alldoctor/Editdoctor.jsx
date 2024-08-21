@@ -72,7 +72,6 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
     const updatedDoctor = {
       _id: doctor._id,
       username: username,
-      password: password,
       dateofbirth: dateOfBirth,
       email: email,
       phone: phone,
@@ -87,7 +86,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
     };
 
     try {
-      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
+      const response = await axios.put(`http://localhost:8800/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
         withCredentials: true
       });
       console.log(response.data);
@@ -245,6 +244,12 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
               >
                 <option value="">Select specialization...</option>
                 <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
+                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
+                <option value="Gastroenterology">Gastroenterology</option>
+                <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
+                <option value="ENT">ENT</option>
+                <option value="Dermatology">Dermatology</option>
+               
               </Form.Control>
             </Form.Group>
 

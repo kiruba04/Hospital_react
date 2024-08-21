@@ -58,5 +58,11 @@
   }
   .aligntop{
     position: relative;
-    top: 25px;
+    top: 60px;
+  }
+
+  .note{
+    width:75%;
+    position: relative;
+    left:12%;
   }

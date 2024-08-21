@@ -3,8 +3,10 @@ import { Container, Row, Col, Form, Button, Nav, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, faNotesMedical } from '@fortawesome/free-solid-svg-icons';
-
+import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, faNotesMedical,faTag } from '@fortawesome/free-solid-svg-icons';
+import Editdoctor from '../alldoctor/Editdoctor'
+import Alert from 'react-bootstrap/Alert';
+import './doctorprofile.css';
 const DoctorInformation = () => {
   const [view, setView] = useState('profile');
   const [doctor, setDoctor] = useState({
@@ -17,6 +19,11 @@ const DoctorInformation = () => {
   });
   const [todayappointments, setTodayappointments] = useState([]);
   const [futureappointments, setFutureappointments] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState(''); // Success or Danger
 
   useEffect(() => {
     const storedDoctor = JSON.parse(localStorage.getItem('user'));
@@ -32,16 +39,25 @@ const DoctorInformation = () => {
 
   const fetchAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
+      const response = await axios.get(`http://localhost:8800/api/appointments/doctor/${doctorId}`);
       setTodayappointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments', error);
     }
   };
 
+  const handleEditClick = (doctor) => {
+    setSelectedDoctor(doctor);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedDoctor(null);
+  };
+
   const fetchFutureAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/future/${doctorId}`);
+      const response = await axios.get(`http://localhost:8800/api/future/${doctorId}`);
       const groupedAppointments = response.data.reduce((acc, appointment) => {
         const date = new Date(appointment.date).toLocaleDateString();
         if (!acc[date]) {
@@ -64,11 +80,38 @@ const DoctorInformation = () => {
   const handleDateChange = (e) => {
     setDoctor({ ...doctor, dateOfBirth: e.target.value });
   };
+  const handleSave = (updatedDoctor) => {
+    // Update the doctor's information in the state
+    setDoctor({
+      ...doctor,
+      username: updatedDoctor.username,
+      dateOfBirth: updatedDoctor.dateOfBirth,
+      email: updatedDoctor.email,
+      phone: updatedDoctor.phone,
+      category: updatedDoctor.category,
+      availableAppointments: updatedDoctor.availableAppointments,
+    });
+  
+    // Optionally update local storage if required
+    localStorage.setItem('user', JSON.stringify({
+      ...doctor,
+      username: updatedDoctor.username,
+      dateOfBirth: updatedDoctor.dateOfBirth,
+      email: updatedDoctor.email,
+      phone: updatedDoctor.phone,
+      category: updatedDoctor.category,
+      availableAppointments: updatedDoctor.availableAppointments,
+    }));
+  
+    // Close the modal and reset selected doctor
+    handleCloseModal();
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/${doctor._id}`, doctor, {
+      const response = await axios.put(`http://localhost:8800/api/doctor/${doctor._id}`, doctor, {
         withCredentials: true  // Ensure cookies are sent
       });
       if (response.status === 200) {
@@ -83,14 +126,28 @@ const DoctorInformation = () => {
     }
   };
 
-  const renderAppointmentSlotCard = (slot) => (
-    <div className="patient-card" key={slot._id}>
-      <h2>Available Slot</h2>
-      <div className="detail"><FontAwesomeIcon icon={faCalendarDay} /><strong>Day:</strong> <span>{slot.Day}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faClock} /><strong>Available Time:</strong> <span>{slot.startTime} - {slot.endTime}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Available Slots:</strong> <span>{slot.availaableslots}</span></div>
-    </div>
-  );
+  const renderAppointmentSlotCard = (slot) => {
+    return (
+      slot.available === true && (
+        <div className="patient-card" key={slot._id}>
+          <h2>Available Slot</h2>
+          <div className="detail">
+            <FontAwesomeIcon icon={faCalendarDay} />
+            <strong>Day:</strong> <span>{slot.Day}</span>
+          </div>
+          <div className="detail">
+            <FontAwesomeIcon icon={faClock} />
+            <strong>Available Time:</strong> <span>{slot.startTime} - {slot.endTime}</span>
+          </div>
+          <div className="detail">
+            <FontAwesomeIcon icon={faCalendarDays} />
+            <strong>Available Slots:</strong> <span>{slot.availaableslots}</span>
+          </div>
+        </div>
+      )
+    );
+  };
+  
 
   const renderAppointmentCard = (appointment) => (
     <div className="patient-card" key={appointment._id}>
@@ -100,20 +157,49 @@ const DoctorInformation = () => {
       <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
       <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>  
+      <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>
+      <div className="detail"><FontAwesomeIcon icon={faTag} /><strong>Appointment Status:</strong> <span>{appointment.status}</span></div>
+      {alertMessage && (
+        <Alert variant={alertVariant} onClose={() => setAlertMessage(null)} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
+      <div className="mt-3">
+        <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointed')}>Appointmented</Button>{' '}
+        <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
+      </div>
     </div>
   );
-
+  
+  const handleAppointmentStatusChange = async (appointmentId, newStatus) => {
+    try {
+      const response = await axios.put(`http://localhost:8800/api/appointments/${appointmentId}/status`, { status: newStatus });
+      if (response.status === 200) {
+        // Update the local state to reflect the status change
+        setTodayappointments(todayappointments.map(appointment => 
+          appointment._id === appointmentId ? { ...appointment, status: newStatus } : appointment
+        ));
+        setAlertMessage(`Appointment status updated to ${newStatus}!`);
+        setAlertVariant('success');
+      }
+    } catch (error) {
+      console.error('Error updating appointment status', error);
+      setAlertMessage('Failed to update appointment status. Please try again.');
+      setAlertVariant('danger');
+    }
+  };
+  
   const renderFutureAppointments = () => {
     return Object.keys(futureappointments).map(date => (
       <div key={date}>
-        <h3>{date}</h3>
+        <h3 className='datefont'>{date}</h3>
         {futureappointments[date].map(renderAppointmentCard)}
       </div>
     ));
   };
 
   return (
+    <>
     <Container className="mt-5">
       <Row>
         <Col md={2}>
@@ -150,8 +236,14 @@ const DoctorInformation = () => {
                       value={doctor.category}
                       onChange={handleChange}
                     >
-                      <option value="">Select specialization...</option>
-                      <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
+                <option value="">Select specialization...</option>
+                <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
+                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
+                <option value="Gastroenterology">Gastroenterology</option>
+                <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
+                <option value="ENT">ENT</option>
+                <option value="Dermatology">Dermatology</option>
+                      
                     </Form.Control>
                   </Form.Group>
                 </Row>
@@ -201,10 +293,11 @@ const DoctorInformation = () => {
 
           {view === 'appointments' && (
             <div>
-              <h2 className='subhead'>Available Appointment Slots</h2>
+              <h2 className='subhead'>Edit Appointment time</h2>
               <Row>
                 {doctor.availableAppointments.map(renderAppointmentSlotCard)}
               </Row>
+              <Button variant="outline-success" onClick={() => handleEditClick(doctor)}>Edit</Button>
             </div>
           )}
 
@@ -234,6 +327,13 @@ const DoctorInformation = () => {
         </Col>
       </Row>
     </Container>
+     <Editdoctor
+     show={showModal}
+     onHide={handleCloseModal}
+     doctor={selectedDoctor}
+     onSave={handleSave}
+   />
+   </>
   );
 };
 

@@ -18,7 +18,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
   const [symptom, setSymptom] = useState('');
 
   useEffect(() => {
-    axios.get(`https://hospitalerp-node.onrender.com/api/doctor/info/${doctorId}`)
+    axios.get(`http://localhost:8800/api/doctor/info/${doctorId}`)
       .then(response => {
         generateAvailableDays(response.data.availableAppointments);
       })
@@ -56,9 +56,9 @@ function AppointmentForm({ doctorId, userId, onHide }) {
       setTotalToken(dayInfo.availaableslots);
       
       try {
-        const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointmentsbydate?doctorid=${doctorId}&date=${selectedDate}`);
+        const response = await axios.get(`http://localhost:8800/api/appointmentsbydate?doctorid=${doctorId}&date=${selectedDate}`);
         const existingAppointments = response.data;
-        const tokenNumber = existingAppointments.length + 1;
+        const tokenNumber = existingAppointments.length;
 
         if (tokenNumber <= dayInfo.availaableslots) {
           setTokenNumber(tokenNumber);
@@ -109,7 +109,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
     };
 
     try {
-      const response = await axios.post('https://hospitalerp-node.onrender.com/api/appointments', newAppointment);
+      const response = await axios.post('http://localhost:8800/api/appointments', newAppointment);
       console.log(response.data);
       onHide();
     } catch (error) {
@@ -118,6 +118,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
   };
 
   return (
+    <>
     <Form onSubmit={handleSubmit}>
       {error && <Alert variant="info">{error}</Alert>}
       <Form.Group className="mb-3" controlId="date">
@@ -143,7 +144,6 @@ function AppointmentForm({ doctorId, userId, onHide }) {
             <Form.Control
               value={symptom}
               onChange={(e) => setSymptom(e.target.value)}
-              required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="symptom">
@@ -187,15 +187,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
             <Form.Label>Total Token</Form.Label>
             <Form.Control
               type="text"
-              value={totalToken}
-              readOnly
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="tokenNumber">
-            <Form.Label>Your Token Number</Form.Label>
-            <Form.Control
-              type="text"
-              value={tokenNumber}
+              value={totalToken-tokenNumber}
               readOnly
             />
           </Form.Group>
@@ -211,6 +203,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
         </Button>
       </div>
     </Form>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import './adminDashboard.css'; // Ensure this is the correct path to your CSS fi
 import Button from 'react-bootstrap/Button';
 import AddDoctor from './AddDoctor';
 
+
 const AdminDashboard = () => {
 
    const [addshow,setAddshow] = useState(false);

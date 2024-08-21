@@ -22,7 +22,7 @@ function NavBar1() {
     // Check if the user is already logged in
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('https://hospitalerp-node.onrender.com/api/auth/checkAuth', {
+        const response = await axios.get('http://localhost:8800/api/auth/checkAuth', {
           withCredentials: true // Ensure cookies are sent
         });
         if (response.data.auth && response.data.isLoggedIn) {
@@ -40,7 +40,7 @@ function NavBar1() {
   const handleLogout = async () => {
     try {
       // Make a POST request to your logout endpoint
-      await axios.post('https://hospitalerp-node.onrender.com/api/auth/logout', {}, {
+      await axios.post('http://localhost:8800/api/auth/logout', {}, {
         withCredentials: true // Ensure cookies are sent
       });
 

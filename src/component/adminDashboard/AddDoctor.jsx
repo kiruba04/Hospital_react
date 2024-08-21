@@ -99,7 +99,7 @@ function AddDoctor(props) {
     };
 
     try {
-      const response = await axios.post('https://hospitalerp-node.onrender.com/api/doctor/add-doctor', newUser, {
+      const response = await axios.post('http://localhost:8800/api/doctor/add-doctor', newUser, {
         withCredentials: true
       });
       console.log(response.data);
@@ -265,6 +265,12 @@ function AddDoctor(props) {
               >
                 <option value="">Select specialization...</option>
                 <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
+                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
+                <option value="Gastroenterology">Gastroenterology</option>
+                <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
+                <option value="ENT">ENT</option>
+                <option value="Dermatology">Dermatology</option>
+
               </Form.Control>
             </Form.Group>
 

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import AppointmentForm from './AppointmentForm';
 import "../navbar/navBar.css";
+import Alert from 'react-bootstrap/Alert';
 
 const DoctorList = ({ userId }) => {
   const [doctors, setDoctors] = useState([]);
@@ -14,7 +15,7 @@ const DoctorList = ({ userId }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios.get('https://hospitalerp-node.onrender.com/api/doctor/getdoctor') // Replace with your API endpoint
+    axios.get('http://localhost:8800/api/doctor/getdoctor') // Replace with your API endpoint
       .then(response => {
         setDoctors(response.data);
         const categories = [...new Set(response.data.map(doctor => doctor.category))];
@@ -36,6 +37,16 @@ const DoctorList = ({ userId }) => {
 
   return (
     <div className='aligntop'>
+<Alert variant="info" className="note">
+  <strong>Note:</strong>
+  <ul>
+    <li>Patients will be given an appointment on a first-come, first-served basis.</li>
+    <li>Appointments may be canceled by the doctor due to unforeseen emergency conditions.</li>
+    <li>Appointment status must be checked by logging into the application.</li>
+  </ul>
+</Alert>
+
+
       <div className="container">
         {categories.map((category, index) => (
           <div className="doctor-type" key={index}>

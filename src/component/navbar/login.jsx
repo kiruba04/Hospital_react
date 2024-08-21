@@ -17,12 +17,12 @@ function Login(props) {
     event.preventDefault();
 
     const loginData = {
-      email: email,
+      phone: email,
       password: password
     };
 
     try {
-        const response = await axios.post('https://hospitalerp-node.onrender.com/api/auth/login', loginData, {
+        const response = await axios.post('http://localhost:8800/api/auth/login', loginData, {
             withCredentials: true  // Ensure cookies are sent
           }); 
       const { userType,user } = response.data;
@@ -82,10 +82,10 @@ function Login(props) {
           <Form onSubmit={handleLogin}>
             {error && <p className="error-message">{error}</p>}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Phone number</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="name@example.com"
+                type="tel"
+                placeholder="Enter the phone"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoFocus
