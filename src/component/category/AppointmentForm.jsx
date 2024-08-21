@@ -18,7 +18,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
   const [symptom, setSymptom] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:8800/api/doctor/info/${doctorId}`)
+    axios.get(`https://hospitalerp-node.onrender.com/api/doctor/info/${doctorId}`)
       .then(response => {
         generateAvailableDays(response.data.availableAppointments);
       })
@@ -56,7 +56,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
       setTotalToken(dayInfo.availaableslots);
       
       try {
-        const response = await axios.get(`http://localhost:8800/api/appointmentsbydate?doctorid=${doctorId}&date=${selectedDate}`);
+        const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointmentsbydate?doctorid=${doctorId}&date=${selectedDate}`);
         const existingAppointments = response.data;
         const tokenNumber = existingAppointments.length;
 
@@ -109,7 +109,7 @@ function AppointmentForm({ doctorId, userId, onHide }) {
     };
 
     try {
-      const response = await axios.post('http://localhost:8800/api/appointments', newAppointment);
+      const response = await axios.post('https://hospitalerp-node.onrender.com/api/appointments', newAppointment);
       console.log(response.data);
       onHide();
     } catch (error) {

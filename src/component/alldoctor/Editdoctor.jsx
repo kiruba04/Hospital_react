@@ -86,7 +86,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
     };
 
     try {
-      const response = await axios.put(`http://localhost:8800/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
+      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
         withCredentials: true
       });
       console.log(response.data);

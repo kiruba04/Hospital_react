@@ -28,7 +28,7 @@ const Patientappoint = () => {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get('http://localhost:8800/api/user/search/phone', {
+            const response = await axios.get('https://hospitalerp-node.onrender.com/api/user/search/phone', {
                 params: { phone: phoneNumber }
             });
             setUserId(response.data.id);
@@ -42,11 +42,11 @@ const Patientappoint = () => {
     const handleDoctorAppointmentSearch = async () => {
         setDoctorAppointments([]);
         try {
-            const doctorResponse = await axios.get('http://localhost:8800/api/user/doctor/phone', {
+            const doctorResponse = await axios.get('https://hospitalerp-node.onrender.com/api/user/doctor/phone', {
                 params: { phone: doctorPhoneNumber }
             });
     
-            const appointmentsResponse = await axios.get(`http://localhost:8800/api/appointments/doctor/date/${doctorResponse.data.id}`, {
+            const appointmentsResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/date/${doctorResponse.data.id}`, {
                 params: { fromDate, toDate }
             });
             
@@ -63,12 +63,12 @@ const Patientappoint = () => {
     const handleSearchAppointment = async () => {
         setAppointments([]);
         try {
-            const userResponse = await axios.get('http://localhost:8800/api/user/doctor/phone', {
+            const userResponse = await axios.get('https://hospitalerp-node.onrender.com/api/user/doctor/phone', {
                 params: { phone: phoneNumberSearch }
             });
             setUsername(userResponse.data.username);
 
-            const appointmentResponse = await axios.get(`http://localhost:8800/api/appointments/doctor/${userResponse.data.id}`);
+            const appointmentResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${userResponse.data.id}`);
             const sortedAppointments = appointmentResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date));
             setAppointments(sortedAppointments);
             setSearchResult1(`User Name: ${userResponse.data.username}`);

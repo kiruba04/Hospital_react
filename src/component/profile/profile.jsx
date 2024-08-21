@@ -32,7 +32,7 @@ const UserInformation = () => {
 
   const fetchAppointments = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8800/api/appointments/${userId}`);
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/${userId}`);
       setAppointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments', error);
@@ -51,7 +51,7 @@ const UserInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8800/api/user/${user._id}`, user, {
+      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/user/${user._id}`, user, {
         withCredentials: true  // Ensure cookies are sent
       });
       if (response.status === 200) {
@@ -89,7 +89,7 @@ const UserInformation = () => {
 
   const deleteappointment = async (appointmentId) => {
     try {
-      await axios.delete(`http://localhost:8800/api/appointment/delete/${appointmentId}`);
+      await axios.delete(`https://hospitalerp-node.onrender.com/api/appointment/delete/${appointmentId}`);
       setAppointments(appointments.filter(app => app._id !== appointmentId));
     } catch (err) {
       console.log(err);

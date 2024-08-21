@@ -99,7 +99,7 @@ function AddDoctor(props) {
     };
 
     try {
-      const response = await axios.post('http://localhost:8800/api/doctor/add-doctor', newUser, {
+      const response = await axios.post('https://hospitalerp-node.onrender.com/api/doctor/add-doctor', newUser, {
         withCredentials: true
       });
       console.log(response.data);

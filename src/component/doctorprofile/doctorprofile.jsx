@@ -39,7 +39,7 @@ const DoctorInformation = () => {
 
   const fetchAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`http://localhost:8800/api/appointments/doctor/${doctorId}`);
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
       setTodayappointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments', error);
@@ -57,7 +57,7 @@ const DoctorInformation = () => {
 
   const fetchFutureAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`http://localhost:8800/api/future/${doctorId}`);
+      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/future/${doctorId}`);
       const groupedAppointments = response.data.reduce((acc, appointment) => {
         const date = new Date(appointment.date).toLocaleDateString();
         if (!acc[date]) {
@@ -111,7 +111,7 @@ const DoctorInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8800/api/doctor/${doctor._id}`, doctor, {
+      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/${doctor._id}`, doctor, {
         withCredentials: true  // Ensure cookies are sent
       });
       if (response.status === 200) {
@@ -173,7 +173,7 @@ const DoctorInformation = () => {
   
   const handleAppointmentStatusChange = async (appointmentId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:8800/api/appointments/${appointmentId}/status`, { status: newStatus });
+      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/appointments/${appointmentId}/status`, { status: newStatus });
       if (response.status === 200) {
         // Update the local state to reflect the status change
         setTodayappointments(todayappointments.map(appointment => 
