@@ -165,7 +165,7 @@ const DoctorInformation = () => {
         </Alert>
       )}
       <div className="mt-3">
-        <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointed')}>Appointmented</Button>{' '}
+        <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointmented')}>Appointmented</Button>{' '}
         <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
       </div>
     </div>
