@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Nav, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Nav, Badge,InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +24,14 @@ const DoctorInformation = () => {
 
   const [alertMessage, setAlertMessage] = useState(null);
   const [alertVariant, setAlertVariant] = useState(''); // Success or Danger
-
+  
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username,setUsername]= useState('');
+  const [notes,setNotes]=useState([]);
+  const [details,setDetails]=useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [userid,setuserid]=useState('');
+  const [docid,setDocid]=useState('');
   useEffect(() => {
     const storedDoctor = JSON.parse(localStorage.getItem('user'));
     if (storedDoctor) {
@@ -34,6 +41,7 @@ const DoctorInformation = () => {
       });
       fetchAppointments(storedDoctor._id);
       fetchFutureAppointments(storedDoctor._id);
+      setDocid(storedDoctor._id);
     }
   }, []);
 
@@ -126,6 +134,33 @@ const DoctorInformation = () => {
     }
   };
 
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get('https://hospitalerp-node.onrender.com/api/user/search/phone', {
+        params: { phone: phoneNumber }
+      });
+
+      
+      if (response.data) {
+        setUsername(response.data.username);
+        setuserid(response.data.id);
+        
+        const noteResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/notes/${response.data.id}`);
+        setNotes(noteResponse.data);  // Assuming `noteResponse.data` is an array of notes
+  
+      } else {
+        setUsername('');
+        setNotes([]);
+        console.error('No user found with this phone number');
+      }
+    } catch (error) {
+      console.error("Error searching for phone number:", error);
+    }
+  };
+  
+  
+
   const renderAppointmentSlotCard = (slot) => {
     return (
       slot.available === true && (
@@ -188,7 +223,46 @@ const DoctorInformation = () => {
       setAlertVariant('danger');
     }
   };
-  
+  const renderNoteCard = (note) => (
+    <div className="patient-card" key={note._id}>
+      <div className="detail">
+        <FontAwesomeIcon icon={faCalendarDays} />
+        <strong>Date:</strong> <span>{new Date(note.date).toLocaleDateString()}</span>
+      </div>
+      <div className="detail">
+        <FontAwesomeIcon icon={faNotesMedical} />
+        <strong>Note:</strong> <span>{note.notes}</span>
+      </div>
+    </div>
+  );
+ 
+  const handlecreate = async () =>{
+    const notesmaking={
+      userid:userid,
+      doctorid:docid,
+      date:dateOfBirth,
+      notes:details
+    }
+    try{
+    const res =  await axios.post('https://hospitalerp-node.onrender.com/api/notes/create', notesmaking)
+    if(res){
+     
+      const newNote = res.data;
+
+      // Update the notes state with the newly created note
+      setNotes(prevNotes => [...prevNotes, newNote]);
+   
+
+    // Reset the date and notes fields
+    setDateOfBirth('');
+    setDetails('');
+    }
+    }
+    catch{
+      console.log('Error')
+    }
+  }
+
   const renderFutureAppointments = () => {
     return Object.keys(futureappointments).map(date => (
       <div key={date}>
@@ -208,6 +282,7 @@ const DoctorInformation = () => {
             <Nav.Link active={view === 'today appointment'} onClick={() => setView('today appointment')} className={`text-success sidenavfont ${view === 'today appointment' ? 'active' : ''}`}>Today's Appointment <Badge pill bg="primary">{todayappointments.length}</Badge></Nav.Link>
             <Nav.Link active={view === 'futureappointment'} onClick={() => setView('futureappointment')} className={`text-success sidenavfont ${view === 'futureappointment' ? 'active' : ''}`}>Future Appointment</Nav.Link>
             <Nav.Link active={view === 'appointments'} onClick={() => setView('appointments')} className={`text-success sidenavfont ${view === 'appointments' ? 'active' : ''}`}>Appointment Slots</Nav.Link>
+            <Nav.Link active={view === 'patient history'} onClick={() => setView('patient history')} className={`text-success sidenavfont ${view === 'patient history' ? 'active' : ''}`}>Patient History</Nav.Link>
           </Nav>
         </Col>
         <Col md={10}>
@@ -322,6 +397,67 @@ const DoctorInformation = () => {
               ) : (
                 renderFutureAppointments()
               )}
+              
+            </div>
+          )}
+          
+          {view === 'patient history' && (
+            <div>
+              <h3 className='subhead'>Patient History</h3>
+              <Row className="mb-3">
+                                    <Col md={8}>
+                                        <InputGroup>
+                                            <Form.Control
+                                                placeholder="Search by phone number"
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                            />
+                                            <Button variant="outline-primary" onClick={handleSearch}>
+                                                Search
+                                            </Button>
+                                        </InputGroup>
+                                    </Col>
+                                </Row>
+
+                                {notes.length === 0 ? (
+                                  <p> No notes. </p>
+                                    ) : (
+                                    <Row>
+                                        {notes.map(renderNoteCard)}
+                                    </Row>
+                                  )}
+                                {username &&
+                                
+                                <Row>
+                                  <Col md={8}>
+                                  <Form.Group className="mb-3" controlId="dateOfBirth">
+                                        <Form.Label>Date of Birth</Form.Label>
+                                            <Form.Control
+                                                 type="date"
+                                                  value={dateOfBirth}
+                                                  onChange={(e) => setDateOfBirth(e.target.value)}
+                                                  required
+                                              />
+                                    </Form.Group>
+                                   <Form.Group className="mb-3" controlId="address">
+                                        <Form.Label>Add notes</Form.Label>
+                                                <Form.Control
+                                                  as="textarea"
+                                                  placeholder="Enter notes about patient"
+                                                  value={details}
+                                                  onChange={(e) => setDetails(e.target.value)}
+                                                  required
+                                                />
+                                     </Form.Group>
+                                     <Button variant="outline-primary" onClick={handlecreate}>
+                                                Add notes
+                                      </Button>
+
+                                  </Col>
+                                </Row>
+                                }
+
+
             </div>
           )}
         </Col>
