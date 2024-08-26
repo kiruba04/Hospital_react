@@ -22,9 +22,8 @@ const DoctorInformation = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const [alertMessage, setAlertMessage] = useState(null);
-  const [alertVariant, setAlertVariant] = useState(''); // Success or Danger
-  
+  const [alertStates, setAlertStates] = useState({}); // To track alerts for each appointment
+  const [todayAppointments, setTodayAppointments] = useState([]); 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [username,setUsername]= useState('');
   const [notes,setNotes]=useState([]);
@@ -184,43 +183,55 @@ const DoctorInformation = () => {
   };
   
 
-  const renderAppointmentCard = (appointment) => (
-    <div className="patient-card" key={appointment._id}>
-      <h2>Patient Details</h2>
-      <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.patientname}</span></div>
-      <div className='detail'><FontAwesomeIcon icon={faCalendarDays} /><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>
-      <div className="detail"><FontAwesomeIcon icon={faTag} /><strong>Appointment Status:</strong> <span>{appointment.status}</span></div>
-      {alertMessage && (
-        <Alert variant={alertVariant} onClose={() => setAlertMessage(null)} dismissible>
-          {alertMessage}
-        </Alert>
-      )}
-      <div className="mt-3">
-        <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointmented')}>Appointmented</Button>{' '}
-        <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
+  const renderAppointmentCard = (appointment) => {
+    const alertInfo = alertStates[appointment._id] || {}; // Get the alert info for the current appointment
+
+    return (
+      <div className="patient-card" key={appointment._id}>
+        <h2>Patient Details</h2>
+        <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.patientname}</span></div>
+        <div className='detail'><FontAwesomeIcon icon={faCalendarDays} /><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faTag} /><strong>Appointment Status:</strong> <span>{appointment.status}</span></div>
+        {alertInfo.message && (
+          <Alert variant={alertInfo.variant} onClose={() => setAlertStates({ ...alertStates, [appointment._id]: null })} dismissible>
+            {alertInfo.message}
+          </Alert>
+        )}
+        <div className="mt-3">
+          <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointmented')}>Appointmented</Button>{' '}
+          <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
   
   const handleAppointmentStatusChange = async (appointmentId, newStatus) => {
     try {
       const response = await axios.put(`https://hospitalerp-node.onrender.com/api/appointments/${appointmentId}/status`, { status: newStatus });
       if (response.status === 200) {
         // Update the local state to reflect the status change
-        setTodayappointments(todayappointments.map(appointment => 
+        setTodayAppointments(todayAppointments.map(appointment => 
           appointment._id === appointmentId ? { ...appointment, status: newStatus } : appointment
         ));
-        setAlertMessage(`Appointment status updated to ${newStatus}!`);
-        setAlertVariant('success');
+
+        // Set alert message and variant for the specific appointment
+        setAlertStates({
+          ...alertStates,
+          [appointmentId]: { message: `Appointment status updated to ${newStatus}!`, variant: 'success' }
+        });
       }
     } catch (error) {
       console.error('Error updating appointment status', error);
-      setAlertMessage('Failed to update appointment status. Please try again.');
-      setAlertVariant('danger');
+      // Set error alert message and variant for the specific appointment
+      setAlertStates({
+        ...alertStates,
+        [appointmentId]: { message: 'Failed to update appointment status. Please try again.', variant: 'danger' }
+      });
     }
   };
   const renderNoteCard = (note) => (
