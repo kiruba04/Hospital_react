@@ -23,7 +23,7 @@ const DoctorInformation = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [alertStates, setAlertStates] = useState({}); // To track alerts for each appointment
-  const [todayAppointments, setTodayAppointments] = useState([]); 
+ 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [username,setUsername]= useState('');
   const [notes,setNotes]=useState([]);
@@ -215,7 +215,7 @@ const DoctorInformation = () => {
       const response = await axios.put(`https://hospitalerp-node.onrender.com/api/appointments/${appointmentId}/status`, { status: newStatus });
       if (response.status === 200) {
         // Update the local state to reflect the status change
-        setTodayAppointments(todayAppointments.map(appointment => 
+        setTodayappointments(todayappointments.map(appointment => 
           appointment._id === appointmentId ? { ...appointment, status: newStatus } : appointment
         ));
 
