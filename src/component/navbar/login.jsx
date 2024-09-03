@@ -84,7 +84,7 @@ function Login(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone number</Form.Label>
               <Form.Control
-                type="tel"
+                type="number"
                 placeholder="Enter the phone"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
