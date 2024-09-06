@@ -63,12 +63,12 @@ const Patientappoint = () => {
     const handleSearchAppointment = async () => {
         setAppointments([]);
         try {
-            const userResponse = await axios.get('https://hospitalerp-node.onrender.com/api/user/doctor/phone', {
+            const userResponse = await axios.get('https://hospitalerp-node.onrender.com/api/user/search/phone', {
                 params: { phone: phoneNumberSearch }
             });
             setUsername(userResponse.data.username);
 
-            const appointmentResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${userResponse.data.id}`);
+            const appointmentResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/${userResponse.data.id}`);
             const sortedAppointments = appointmentResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date));
             setAppointments(sortedAppointments);
             setSearchResult1(`User Name: ${userResponse.data.username}`);
