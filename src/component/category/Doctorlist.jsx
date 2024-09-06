@@ -40,9 +40,9 @@ const DoctorList = ({ userId }) => {
 <Alert variant="info" className="note">
   <strong>Note:</strong>
   <ul>
-    <li>Patients will be given an appointment on a first-come, first-served basis.</li>
+    <li>Order of consultation subjected to change as per emergency need / first come , first server basis</li>
     <li>Appointments may be canceled by the doctor due to unforeseen emergency conditions.</li>
-    <li>Appointment status must be checked by logging into the application.</li>
+    <li>Appointment status must be checked by logging into the application prior to reaching the clinic.</li>
   </ul>
 </Alert>
 
