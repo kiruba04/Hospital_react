@@ -202,7 +202,7 @@ const DoctorInformation = () => {
           </Alert>
         )}
         <div className="mt-3">
-          <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Appointmented')}>Appointmented</Button>{' '}
+          <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Conformed')}>Conformed</Button>{' '}
           <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
         </div>
       </div>
@@ -442,7 +442,7 @@ const DoctorInformation = () => {
                                 <Row>
                                   <Col md={8}>
                                   <Form.Group className="mb-3" controlId="dateOfBirth">
-                                        <Form.Label>Date of Birth</Form.Label>
+                                        <Form.Label>Date</Form.Label>
                                             <Form.Control
                                                  type="date"
                                                   value={dateOfBirth}
