@@ -112,7 +112,6 @@ const UserInformation = () => {
         <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faCalendarDay} /><strong>Day:</strong> <span>{appointment.day}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Username:</strong> <span>{user.username}</span></div>
-        <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faTag} /><strong>Appointment Staus:</strong> <span>{appointment.status}</span></div>
         {isCancelable && (
           <div className='detail d-flex justify-content-center'>
