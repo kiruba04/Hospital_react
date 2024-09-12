@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Nav } from 'react-bootstrap';
 import axios from 'axios';
 import "./Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserDoctor, faTicket, faUser, faCalendarDay, faCalendarDays, faClock ,faTag} from '@fortawesome/free-solid-svg-icons';
+import { faUserDoctor, faUser, faCalendarDay, faCalendarDays, faClock ,faTag} from '@fortawesome/free-solid-svg-icons';
 
 const UserInformation = () => {
   const [view, setView] = useState('profile');

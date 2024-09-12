@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Nav, Badge,InputGroup } from 'react-
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, faNotesMedical,faTag } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, faNotesMedical,faTag, faPhone } from '@fortawesome/free-solid-svg-icons';
 import Editdoctor from '../alldoctor/Editdoctor'
 import Alert from 'react-bootstrap/Alert';
 import './doctorprofile.css';
@@ -192,6 +192,7 @@ const DoctorInformation = () => {
         <div className="detail"><FontAwesomeIcon icon={faUser} /><strong>Patient name:</strong> <span>{appointment.patientname}</span></div>
         <div className='detail'><FontAwesomeIcon icon={faCalendarDays} /><strong>Patient Age:</strong><span>{appointment.patientage}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faVenusMars} /><strong>Gender:</strong> <span>{appointment.patientgender}</span></div>
+        <div className="detail"><FontAwesomeIcon icon={faPhone}/><strong>Phone:</strong><span>{appointment.userid.phone}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faTicket} /><strong>Token Number:</strong> <span>{appointment.tokennumber}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faCalendarDays} /><strong>Date:</strong> <span>{new Date(appointment.date).toLocaleDateString()}</span></div>
         <div className="detail"><FontAwesomeIcon icon={faNotesMedical} /><strong>Appointment Reason:</strong> <span>{appointment.symptom}</span></div>
