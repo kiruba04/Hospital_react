@@ -203,7 +203,7 @@ const DoctorInformation = () => {
           </Alert>
         )}
         <div className="mt-3">
-          <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Confirmed')}>Conformed</Button>{' '}
+          <Button variant="success" onClick={() => handleAppointmentStatusChange(appointment._id, 'Confirmed')}>Confirmed</Button>{' '}
           <Button variant="danger" onClick={() => handleAppointmentStatusChange(appointment._id, 'Canceled')}>Cancel</Button>
         </div>
       </div>
