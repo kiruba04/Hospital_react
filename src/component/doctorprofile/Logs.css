@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Teko:wght@300..700&display=swap');
+
+.logtitle{
+    position:absolute;
+    font-family: "Nunito", sans-serif;
+    left:45%;
+    margin-bottom: 10px;
+    background: #25CC0F;
+    background: linear-gradient(to bottom right, #25CC0F 0%, #00FF00 50%, #419E03 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+}
+
+.logcontainer{
+    position: absolute;
+    top:10%;
+    background-color:#F5F7F8;
+    padding: 25px;
+    border-radius: 2%;
+}
+
+.logheading{
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 15px;
+    background: #25CC0F;
+    background: linear-gradient(to bottom right, #25CC0F 0%, #00FF00 50%, #419E03 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.details
+{
+    margin-left:5%;
+    
+}
+
+.tableheading{
+    text-align: center;
+}
+
+.tablehead{
+    background-color:  #198754 !important;
+    color:white !important;
+}
+
+.btn-outline-info
+{
+    --bs-btn-hover-color : white !important;
+    --bs-btn-active-color : white !important;
+}
+
+.loader
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.download{
+    margin-left: 10px;
+}
+

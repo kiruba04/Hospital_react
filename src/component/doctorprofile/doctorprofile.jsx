@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Nav, Badge,InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Nav, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import "../profile/Profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,7 @@ import { faClock, faCalendarDays, faCalendarDay, faUser, faTicket, faVenusMars, 
 import Editdoctor from '../alldoctor/Editdoctor'
 import Alert from 'react-bootstrap/Alert';
 import './doctorprofile.css';
+import Patientinfos from './Patientinfos'
 const DoctorInformation = () => {
   const [view, setView] = useState('profile');
   const [doctor, setDoctor] = useState({
@@ -23,14 +24,10 @@ const DoctorInformation = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [alertStates, setAlertStates] = useState({}); // To track alerts for each appointment
- 
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [username,setUsername]= useState('');
-  const [notes,setNotes]=useState([]);
-  const [details,setDetails]=useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [userid,setuserid]=useState('');
-  const [docid,setDocid]=useState('');
+
+
+
+  //useeffect for doctor info
   useEffect(() => {
     const storedDoctor = JSON.parse(localStorage.getItem('user'));
     if (storedDoctor) {
@@ -40,10 +37,11 @@ const DoctorInformation = () => {
       });
       fetchAppointments(storedDoctor._id);
       fetchFutureAppointments(storedDoctor._id);
-      setDocid(storedDoctor._id);
+      
     }
   }, []);
 
+  //fetch today appointments for doc
   const fetchAppointments = async (doctorId) => {
     try {
       const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
@@ -53,15 +51,7 @@ const DoctorInformation = () => {
     }
   };
 
-  const handleEditClick = (doctor) => {
-    setSelectedDoctor(doctor);
-    setShowModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedDoctor(null);
-  };
-
+  //fetch futhure appointment
   const fetchFutureAppointments = async (doctorId) => {
     try {
       const response = await axios.get(`https://hospitalerp-node.onrender.com/api/future/${doctorId}`);
@@ -87,6 +77,8 @@ const DoctorInformation = () => {
   const handleDateChange = (e) => {
     setDoctor({ ...doctor, dateOfBirth: e.target.value });
   };
+
+  //local handel
   const handleSave = (updatedDoctor) => {
     // Update the doctor's information in the state
     setDoctor({
@@ -98,7 +90,7 @@ const DoctorInformation = () => {
       category: updatedDoctor.category,
       availableAppointments: updatedDoctor.availableAppointments,
     });
-  
+    
     // Optionally update local storage if required
     localStorage.setItem('user', JSON.stringify({
       ...doctor,
@@ -109,12 +101,12 @@ const DoctorInformation = () => {
       category: updatedDoctor.category,
       availableAppointments: updatedDoctor.availableAppointments,
     }));
-  
+    
     // Close the modal and reset selected doctor
     handleCloseModal();
   };
   
-
+// edit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -132,34 +124,10 @@ const DoctorInformation = () => {
       alert('An error occurred while saving doctor information. Please try again.');
     }
   };
-
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get('https://hospitalerp-node.onrender.com/api/user/search/phone', {
-        params: { phone: phoneNumber }
-      });
-
-      
-      if (response.data) {
-        setUsername(response.data.username);
-        setuserid(response.data.id);
-        
-        const noteResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/notes/${response.data.id}`);
-        setNotes(noteResponse.data);  // Assuming `noteResponse.data` is an array of notes
-  
-      } else {
-        setUsername('');
-        setNotes([]);
-        console.error('No user found with this phone number');
-      }
-    } catch (error) {
-      console.error("Error searching for phone number:", error);
-    }
-  };
-  
   
 
+   
+//appointment render
   const renderAppointmentSlotCard = (slot) => {
     return (
       slot.available === true && (
@@ -209,7 +177,7 @@ const DoctorInformation = () => {
       </div>
     );
   };
-
+  
   
   const handleAppointmentStatusChange = async (appointmentId, newStatus) => {
     try {
@@ -235,46 +203,9 @@ const DoctorInformation = () => {
       });
     }
   };
-  const renderNoteCard = (note) => (
-    <div className="patient-card" key={note._id}>
-      <div className="detail">
-        <FontAwesomeIcon icon={faCalendarDays} />
-        <strong>Date:</strong> <span>{new Date(note.date).toLocaleDateString()}</span>
-      </div>
-      <div className="detail">
-        <FontAwesomeIcon icon={faNotesMedical} />
-        <strong>Note:</strong> <span>{note.notes}</span>
-      </div>
-    </div>
-  );
- 
-  const handlecreate = async () =>{
-    const notesmaking={
-      userid:userid,
-      doctorid:docid,
-      date:dateOfBirth,
-      notes:details
-    }
-    try{
-    const res =  await axios.post('https://hospitalerp-node.onrender.com/api/notes/create', notesmaking)
-    if(res){
-     
-      const newNote = res.data;
 
-      // Update the notes state with the newly created note
-      setNotes(prevNotes => [...prevNotes, newNote]);
-   
-
-    // Reset the date and notes fields
-    setDateOfBirth('');
-    setDetails('');
-    }
-    }
-    catch{
-      console.log('Error')
-    }
-  }
-
+  // future appointment
+  
   const renderFutureAppointments = () => {
     return Object.keys(futureappointments).map(date => (
       <div key={date}>
@@ -284,10 +215,21 @@ const DoctorInformation = () => {
     ));
   };
 
+  // edit model
+  const handleEditClick = (doctor) => {
+    setSelectedDoctor(doctor);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedDoctor(null);
+  };
+  
   return (
     <>
     <Container className="mt-5">
       <Row>
+        
         <Col md={2}>
           <Nav className="flex-column">
             <Nav.Link active={view === 'profile'} onClick={() => setView('profile')} className={`text-success sidenavfont ${view === 'profile' ? 'active' : ''}`}>Profile</Nav.Link>
@@ -413,64 +355,8 @@ const DoctorInformation = () => {
             </div>
           )}
           
-          {view === 'patient history' && (
-            <div>
-              <h3 className='subhead'>Patient History</h3>
-              <Row className="mb-3">
-                                    <Col md={8}>
-                                        <InputGroup>
-                                            <Form.Control
-                                                placeholder="Search by phone number"
-                                                value={phoneNumber}
-                                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                            />
-                                            <Button variant="outline-primary" onClick={handleSearch}>
-                                                Search
-                                            </Button>
-                                        </InputGroup>
-                                    </Col>
-                                </Row>
-
-                                {notes.length === 0 ? (
-                                  <p> No notes. </p>
-                                    ) : (
-                                    <Row>
-                                        {notes.map(renderNoteCard)}
-                                    </Row>
-                                  )}
-                                {username &&
-                                
-                                <Row>
-                                  <Col md={8}>
-                                  <Form.Group className="mb-3" controlId="dateOfBirth">
-                                        <Form.Label>Date</Form.Label>
-                                            <Form.Control
-                                                 type="date"
-                                                  value={dateOfBirth}
-                                                  onChange={(e) => setDateOfBirth(e.target.value)}
-                                                  required
-                                              />
-                                    </Form.Group>
-                                   <Form.Group className="mb-3" controlId="address">
-                                        <Form.Label>Add notes</Form.Label>
-                                                <Form.Control
-                                                  as="textarea"
-                                                  placeholder="Enter notes about patient"
-                                                  value={details}
-                                                  onChange={(e) => setDetails(e.target.value)}
-                                                  required
-                                                />
-                                     </Form.Group>
-                                     <Button variant="outline-primary" onClick={handlecreate}>
-                                                Add notes
-                                      </Button>
-
-                                  </Col>
-                                </Row>
-                                }
-
-
-            </div>
+          {view === 'patient history' && (  
+          <Patientinfos/>
           )}
         </Col>
       </Row>

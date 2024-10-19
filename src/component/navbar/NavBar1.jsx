@@ -90,7 +90,7 @@ function NavBar1() {
                   <Nav.Link href="/about">About</Nav.Link>
                   {isLoggedIn && storedUser ? (
                     <>
-                      <Nav.Link href={storedUser.isAdmin ? '/admin' : userType === 'doctor' ? '/doctor' :userType==='receptionist'?'/receptionist': '/dashboard'}>
+                      <Nav.Link href={storedUser.isAdmin ? '/admin' : userType === 'doctor' ? '/doctor' :userType==='receptionist'?'/receptionist': '/dashboard'} className='username'>
                         {storedUser.username}
                       </Nav.Link>
                       <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>

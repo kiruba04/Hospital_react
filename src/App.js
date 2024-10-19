@@ -13,7 +13,9 @@ import Admin from "./pages/admin/admin"
 import Doctor from "./pages/doctor/doctor"
 import Receptionist from "./pages/receptionist/receptionist"
 import About from "./pages/abort/abort";
+import CreateLog from "./pages/createLog/createLog";  
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
         <Route path="/doctor" element ={<Doctor/>}/>
         <Route path='/receptionist' element ={<Receptionist/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route path="/create-log/:appointmentId" element={<CreateLog />} /> {/* New route for create log */}
       </Routes>
     </BrowserRouter>
 

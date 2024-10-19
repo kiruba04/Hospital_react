@@ -1,4 +1,4 @@
-import Patientappoint from "../../component/patientappoint/Patientappoint";
+import Patientappoint from "../../component/Recipicent/Patientappoint";
 
 const receptionist =() =>{
 

@@ -35,7 +35,7 @@ const ClinicInfoPage = () => {
           </ul>
         </div>
         <div className="clinic-page-image">
-          <img src="https://res.cloudinary.com/dsgdnskfj/image/upload/v1723218291/OIP_1_mv1vvc.jpg" alt="Clinic care" />
+          <img src="https://lh5.googleusercontent.com/p/AF1QipPHnH_EwJ3cuH_2f90y4kxUjbHGWOpcvVu8P5cC=w203-h152-k-no" alt="Clinic care" />
         </div>
       </main>
       <footer className="clinic-page-footer">

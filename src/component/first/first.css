@@ -7,12 +7,21 @@
 
 /*background*/
 .background{
-  background-image: url('https://www.educationconsultancy.co.in/pic/new1.jpg');
+  background-image: url('https://res.cloudinary.com/dsgdnskfj/image/upload/v1728106525/doctor-background-r1gu608z548qzytp_bu0ttu.jpg');
   background-size: cover; /* Ensures the image covers the entire element */
   background-position: center; 
   background-repeat: no-repeat;
   width: 100%;
   height: 100vh; 
+  opacity:0;
+  animation: bg 2s forwards;
+}
+
+@keyframes bg {
+ 100%{
+  opacity: 1;
+ }
+  
 }
 
 .animated-text {
@@ -21,7 +30,7 @@
     left: -100%; /* Start from outside the viewport */
     animation: slideIn 1s forwards; /* Animation duration and fill mode */
   }
-  
+
   @keyframes slideIn {
     0% {
       left: -100%; /* Start position */

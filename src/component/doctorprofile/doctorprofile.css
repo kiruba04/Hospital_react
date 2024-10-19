@@ -4,3 +4,34 @@
     font-family: "Libre Baskerville", serif;
 
 }
+/* search */
+.searchbtn{
+    margin-top: 3%;
+
+}
+
+   /* date range */
+   .date-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.date-range-inputs label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.date-range-inputs input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+    margin-top: 5px;
+    width: 200px;
+}
