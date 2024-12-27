@@ -3,7 +3,7 @@ import Doctor from "../../component/doctorprofile/doctorprofile.jsx"
 import Welcome from "../../component/welcome/welcome.jsx"
 import "./doctor.css"
 
-const doctor =() =>{
+const Doctorpage =() =>{
     return(
         <>
         <NavBar />
@@ -14,4 +14,4 @@ const doctor =() =>{
         </>
     )
 }
-export default doctor;
+export default Doctorpage;

@@ -44,7 +44,7 @@ const DoctorInformation = () => {
   //fetch today appointments for doc
   const fetchAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/${doctorId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/appointments/doctor/${doctorId}`);
       setTodayappointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments', error);
@@ -54,7 +54,7 @@ const DoctorInformation = () => {
   //fetch futhure appointment
   const fetchFutureAppointments = async (doctorId) => {
     try {
-      const response = await axios.get(`https://hospitalerp-node.onrender.com/api/future/${doctorId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/future/${doctorId}`);
       const groupedAppointments = response.data.reduce((acc, appointment) => {
         const date = new Date(appointment.date).toLocaleDateString();
         if (!acc[date]) {
@@ -110,7 +110,7 @@ const DoctorInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/${doctor._id}`, doctor, {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/doctor/${doctor._id}`, doctor, {
         withCredentials: true  // Ensure cookies are sent
       });
       if (response.status === 200) {
@@ -181,7 +181,7 @@ const DoctorInformation = () => {
   
   const handleAppointmentStatusChange = async (appointmentId, newStatus) => {
     try {
-      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/appointments/${appointmentId}/status`, { status: newStatus });
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/appointments/${appointmentId}/status`, { status: newStatus });
       if (response.status === 200) {
         // Update the local state to reflect the status change
         setTodayappointments(todayappointments.map(appointment => 
@@ -253,27 +253,21 @@ const DoctorInformation = () => {
                       name="username"
                       value={doctor.username}
                       onChange={handleChange}
+                      readOnly
                     />
                   </Form.Group>
 
                   <Form.Group as={Col} xs={12} md={6} controlId="formCategory">
                     <Form.Label>Category</Form.Label>
                     <Form.Control
-                      as="select"
+                  
                       placeholder="Enter your category"
                       name="category"
                       value={doctor.category}
                       onChange={handleChange}
-                    >
-                <option value="">Select specialization...</option>
-                <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
-                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
-                <option value="Gastroenterology">Gastroenterology</option>
-                <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
-                <option value="ENT">ENT</option>
-                <option value="Dermatology">Dermatology</option>
-                      
-                    </Form.Control>
+                      readOnly
+                    />
+                
                   </Form.Group>
                 </Row>
 
@@ -285,6 +279,7 @@ const DoctorInformation = () => {
                       name="dateOfBirth"
                       value={doctor.dateOfBirth}
                       onChange={handleDateChange}
+                      readOnly
                     />
                   </Form.Group>
 
@@ -296,6 +291,7 @@ const DoctorInformation = () => {
                       name="email"
                       value={doctor.email}
                       onChange={handleChange}
+                      readOnly
                     />
                   </Form.Group>
                 </Row>
@@ -309,13 +305,12 @@ const DoctorInformation = () => {
                       name="phone"
                       value={doctor.phone}
                       onChange={handleChange}
+                      readOnly
                     />
                   </Form.Group>
                 </Row>
 
-                <Button variant="primary" type="submit">
-                  Save All
-                </Button>
+                <Button variant="outline-success" onClick={() => handleEditClick(doctor)}>Edit</Button>
               </Form>
             </div>
           )}

@@ -11,7 +11,7 @@ const AllDoctor = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios.get('https://hospitalerp-node.onrender.com/api/doctor/getdoctor') // Replace with your API endpoint
+    axios.get(`${process.env.REACT_APP_API_URL}/api/doctor/getdoctor`) // Replace with your API endpoint
       .then(response => {
         setDoctors(response.data);
       })

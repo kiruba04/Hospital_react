@@ -15,7 +15,7 @@ const DoctorList = ({ userId }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios.get('https://hospitalerp-node.onrender.com/api/doctor/getdoctor') // Replace with your API endpoint
+    axios.get(`${process.env.REACT_APP_API_URL}/api/doctor/getdoctor`) // Replace with your API endpoint
       .then(response => {
         setDoctors(response.data);
         const categories = [...new Set(response.data.map(doctor => doctor.category))];
@@ -57,7 +57,7 @@ const DoctorList = ({ userId }) => {
                   <img src={doctor.imageUrl || "https://static.vecteezy.com/system/resources/previews/000/421/716/original/vector-doctor-icon.jpg"} alt={`Doctor ${doctor.username}`} className="image-preview" />
                   <div className="card-content1">
                     <h3>Dr. {doctor.username}</h3>
-                    <p><strong>Designation:</strong> MBBS</p>
+                    <p>{doctor.qualification}</p>
                     <Button variant="outline-success" className="Reserve" onClick={() => handleAppointmentClick(doctor._id)}>Appointment</Button>
                   </div>
                 </div>

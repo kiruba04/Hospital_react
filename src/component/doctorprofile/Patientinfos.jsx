@@ -21,7 +21,7 @@ const Patientinfos = () => {
         setDoctorAppointments([]);
         setLogStatus({});  // Reset log status for new search
         try {
-            const appointmentsResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/appointments/doctor/date/${doctorid}`, {
+            const appointmentsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/appointments/doctor/date/${doctorid}`, {
                 params: { fromDate, toDate }
             });
             const sortedAppointments = appointmentsResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -39,7 +39,7 @@ const Patientinfos = () => {
     // Function to check if a log exists for the given appointment ID
     const checkLogExistence = async (appointmentId) => {
         try {
-            const logResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/logs/view/${appointmentId}`);
+            const logResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/logs/view/${appointmentId}`);
             if (logResponse.data) {
                 setLogStatus((prev) => ({ ...prev, [appointmentId]: true }));  // Log exists
             }

@@ -11,6 +11,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
   const [password, setPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [email, setEmail] = useState('');
+  const [qualification, setQualification] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
   const [availability, setAvailability] = useState({
@@ -31,6 +32,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
       setUsername(doctor.username);
       setDateOfBirth(doctor.dateofbirth ? new Date(doctor.dateofbirth).toISOString().split('T')[0] : '');
       setEmail(doctor.email);
+      setQualification(doctor.qualification);
       setPhone(doctor.phone);
       setCategory(doctor.category);
       setAvailability(doctor.availableAppointments.reduce((acc, appointment) => {
@@ -52,6 +54,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
     setPassword('');
     setDateOfBirth('');
     setEmail('');
+    setQualification('');
     setPhone('');
     setCategory('');
     setAvailability({
@@ -74,6 +77,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
       username: username,
       dateofbirth: dateOfBirth,
       email: email,
+      qualification:qualification,
       phone: phone,
       category: category,
       availableAppointments: Object.entries(availability).map(([day, details]) => ({
@@ -86,7 +90,7 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
     };
 
     try {
-      const response = await axios.put(`https://hospitalerp-node.onrender.com/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/doctor/update-doctor/${doctor._id}`, updatedDoctor, {
         withCredentials: true
       });
       console.log(response.data);
@@ -244,13 +248,25 @@ function AddDoctor({ show, onHide, doctor, onSave }) {
               >
                 <option value="">Select specialization...</option>
                 <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
-                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
+                <option value="Gastroenterology & Pediatrics">Gastroenterology & Pediatrics</option>
                 <option value="Gastroenterology">Gastroenterology</option>
                 <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
                 <option value="ENT">ENT</option>
                 <option value="Dermatology">Dermatology</option>
-               
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="General medicine">General Medicine</option>
               </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="qualification">
+              <Form.Label>Enter Qualification</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Qualification"
+                value={qualification}
+                onChange={(e) => setQualification(e.target.value)}
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">

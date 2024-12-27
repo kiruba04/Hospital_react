@@ -11,6 +11,7 @@ function AddDoctor(props) {
   const [password, setPassword] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [email, setEmail] = useState('');
+  const [qualification, setQualification] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
@@ -32,6 +33,7 @@ function AddDoctor(props) {
     setPassword('');
     setDateOfBirth('');
     setEmail('');
+    setQualification('');
     setPhone('');
     setCategory('');
     setImage(null);
@@ -86,6 +88,7 @@ function AddDoctor(props) {
       password: password,
       dateofbirth: dateOfBirth,
       email: email,
+      qualification:qualification,
       phone: phone,
       category: category,
       imageUrl: imageUrl,
@@ -99,7 +102,7 @@ function AddDoctor(props) {
     };
 
     try {
-      const response = await axios.post('https://hospitalerp-node.onrender.com/api/doctor/add-doctor', newUser, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/doctor/add-doctor`, newUser, {
         withCredentials: true
       });
       console.log(response.data);
@@ -229,7 +232,6 @@ function AddDoctor(props) {
                 type="date"
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
-                required
               />
             </Form.Group>
 
@@ -265,13 +267,26 @@ function AddDoctor(props) {
               >
                 <option value="">Select specialization...</option>
                 <option value="Orthopaedics Surgeon">Orthopaedics Surgeon</option>
-                <option value="Gastroentrotopy & Pediatrics">Gastroentrotopy & Pediatrics</option>
+                <option value="Gastroenterology & Pediatrics">Gastroenterology & Pediatrics</option>
                 <option value="Gastroenterology">Gastroenterology</option>
                 <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
                 <option value="ENT">ENT</option>
                 <option value="Dermatology">Dermatology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="General medicine">General Medicine</option>
 
               </Form.Control>
+
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="qualification">
+              <Form.Label>Enter Qualification</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Qualification"
+                value={qualification}
+                onChange={(e) => setQualification(e.target.value)}
+                required
+              />
             </Form.Group>
 
             {imagePreview && (

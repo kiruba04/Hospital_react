@@ -32,11 +32,11 @@ const CreateLog = () => {
       const fetchDetails = async () => {
         try {
           // Fetch appointment details
-          const response = await axios.get(`https://hospitalerp-node.onrender.com/api/appointment/${appointmentId}`);
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/appointment/${appointmentId}`);
           setAppointmentDetails(response.data);
     
           // Check if a log exists for this appointment
-          const logResponse = await axios.get(`https://hospitalerp-node.onrender.com/api/logs/view/${appointmentId}`);
+          const logResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/logs/view/${appointmentId}`);
           if (logResponse.data) {
             setPrescriptions(() => logResponse.data.prescriptions || Array(5).fill({ medicine: "", dosage: "", dosageAmount: "", duration: "", time: { morning: false, afternoon: false, night: false } }));
             setTests(() => logResponse.data.tests || Array(5).fill({test:"",testimage:""}));
@@ -110,10 +110,10 @@ const CreateLog = () => {
           };
 
           if (isEditing) {
-              await axios.put(`https://hospitalerp-node.onrender.com/api/logs/edit/${appointmentId}`, logData);
+              await axios.put(`${process.env.REACT_APP_API_URL}/api/logs/edit/${appointmentId}`, logData);
               alert("Log updated successfully");
           } else {
-              await axios.post("https://hospitalerp-node.onrender.com/api/logs/add", logData);
+              await axios.post(`${process.env.REACT_APP_API_URL}/api/logs/add`, logData);
               alert("Log created successfully");
           }
       } catch (error) {

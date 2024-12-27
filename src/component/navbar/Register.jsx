@@ -61,7 +61,7 @@ function Register(props) {
     };
 
     try {
-      const response = await axios.post('https://hospitalerp-node.onrender.com/api/auth/register', newUser);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, newUser);
       console.log(response.data);
       props.onHide();
       defa()
@@ -98,7 +98,7 @@ function Register(props) {
           <Form onSubmit={handleSubmit}>
 
             <Form.Group className="mb-3" controlId="userName">
-              <Form.Label>User Name</Form.Label>
+              <Form.Label>User Name*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your name"
@@ -109,7 +109,7 @@ function Register(props) {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label>Last Name*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your name"
@@ -121,7 +121,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email address*</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="name@example.com"
@@ -132,7 +132,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password*</Form.Label>
               <div className="password-field">
                 <Form.Control
                   type={showPassword ? "text" : "password"}
@@ -148,7 +148,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
+              <Form.Label>Confirm Password*</Form.Label>
               <div className="password-field">
                 <Form.Control
                   type={showPassword ? "text" : "password"}
@@ -164,7 +164,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="gender">
-              <Form.Label>gender</Form.Label>
+              <Form.Label>gender*</Form.Label>
               <Form.Select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
@@ -178,7 +178,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="bloodType">
-              <Form.Label>Blood Type</Form.Label>
+              <Form.Label>Blood Type*</Form.Label>
               <Form.Select
                 value={bloodType}
                 onChange={(e) => setBloodType(e.target.value)}
@@ -202,12 +202,12 @@ function Register(props) {
                 type="date"
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
-                required
+                
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="phone">
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label>Phone Number*</Form.Label>
               <Form.Control
                 type="tel"
                 placeholder="Enter phone number"
@@ -218,7 +218,7 @@ function Register(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="address">
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Address*</Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Enter address"
